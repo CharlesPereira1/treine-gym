@@ -4,6 +4,7 @@ import React from 'react';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import { Input } from '@components/input';
+import { Button } from '@components/button';
 
 type SigninProps = {};
 
@@ -37,6 +38,9 @@ export const Signin: React.FC<SigninProps> = ({}) => {
       />
 
       <Input placeholder="Senha" secureTextEntry />
+
+      <Button title="Acessar" />
+      <Button title="Criar conta" variant="outline" />
     </VStack>
   );
 };
