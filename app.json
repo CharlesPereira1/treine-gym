@@ -1,0 +1,12 @@
+{
+  "name": "treinegym",
+  "displayName": "treinegym",
+  "expo": {
+    "name": "treinegym",
+    "slug": "treinegym",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
