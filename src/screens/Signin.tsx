@@ -1,14 +1,15 @@
-import { Center, Image, Text, VStack } from 'native-base';
+import { Center, Heading, Image, Text, VStack } from 'native-base';
 import React from 'react';
 
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
+import { Input } from '@components/input';
 
 type SigninProps = {};
 
 export const Signin: React.FC<SigninProps> = ({}) => {
   return (
-    <VStack flex={1} bg="gray.700">
+    <VStack flex={1} bg="gray.700" px={10}>
       <Image
         source={BackgroundImg}
         alt="Pessoas treinando"
@@ -22,6 +23,20 @@ export const Signin: React.FC<SigninProps> = ({}) => {
           Treine sua mente e o seu corpo
         </Text>
       </Center>
+
+      <Center>
+        <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
+          Acesse sua conta
+        </Heading>
+      </Center>
+
+      <Input
+        placeholder="E-mail"
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <Input placeholder="Senha" secureTextEntry />
     </VStack>
   );
 };
