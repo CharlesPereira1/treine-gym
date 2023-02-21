@@ -11,6 +11,7 @@ import {
 import { THEME } from './src/theme';
 import { Loading } from '@components/loading';
 import { Signin } from '@screens/Signin';
+import { SignUp } from '@screens/SignUp';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
@@ -23,7 +24,7 @@ export default function App() {
         translucent
       />
 
-      {fontsLoaded ? <Signin /> : <Loading />}
+      {fontsLoaded ? <SignUp /> : <Loading />}
     </NativeBaseProvider>
   );
 }
