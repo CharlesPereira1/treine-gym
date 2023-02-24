@@ -4,8 +4,8 @@ import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
 
 import { AuthNavigationroutesProps } from '@routes/auth.routes';
 
-import { Input } from '@components/input';
-import { Button } from '@components/button';
+import { Input } from '@components/Input';
+import { Button } from '@components/Button';
 
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';

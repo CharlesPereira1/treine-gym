@@ -1,12 +1,14 @@
-import { Center, Text } from 'native-base';
 import React from 'react';
+import { Center, Text, VStack } from 'native-base';
+
+import { HomeHeader } from '@components/HomeHeader';
 
 type HomeProps = {};
 
 export const Home: React.FC<HomeProps> = ({}) => {
   return (
-    <Center flex={1}>
-      <Text color="white">Home</Text>
-    </Center>
+    <VStack>
+      <HomeHeader />
+    </VStack>
   );
 };

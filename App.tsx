@@ -9,7 +9,7 @@ import {
 } from '@expo-google-fonts/roboto';
 
 import { THEME } from './src/theme';
-import { Loading } from '@components/loading';
+import { Loading } from '@components/Loading';
 import { Routes } from '@routes/index';
 
 export default function App() {
