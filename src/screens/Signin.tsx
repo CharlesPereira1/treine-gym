@@ -1,14 +1,24 @@
-import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
+
+import { AuthNavigationroutesProps } from '@routes/auth.routes';
+
+import { Input } from '@components/input';
+import { Button } from '@components/button';
 
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
-import { Input } from '@components/input';
-import { Button } from '@components/button';
 
 type SigninProps = {};
 
 export const Signin: React.FC<SigninProps> = ({}) => {
+  const navigation = useNavigation<AuthNavigationroutesProps>();
+
+  const handleNewAccount = () => {
+    navigation.navigate('signUp');
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -17,6 +27,7 @@ export const Signin: React.FC<SigninProps> = ({}) => {
       <VStack flex={1} bg="gray.700" px={10} pb={16}>
         <Image
           source={BackgroundImg}
+          defaultSource={BackgroundImg}
           alt="Pessoas treinando"
           resizeMode="contain"
           position="absolute"
@@ -50,7 +61,11 @@ export const Signin: React.FC<SigninProps> = ({}) => {
             Ainda não tem acesso?
           </Text>
 
-          <Button title="Criar conta" variant="outline" />
+          <Button
+            title="Criar conta"
+            variant="outline"
+            onPress={handleNewAccount}
+          />
         </Center>
       </VStack>
     </ScrollView>

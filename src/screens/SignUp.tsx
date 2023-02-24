@@ -1,5 +1,8 @@
-import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
+
+import { AuthNavigationroutesProps } from '@routes/auth.routes';
 
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
@@ -9,6 +12,12 @@ import { Button } from '@components/button';
 type SignUpProps = {};
 
 export const SignUp: React.FC<SignUpProps> = ({}) => {
+  const navigation = useNavigation<AuthNavigationroutesProps>();
+
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -17,6 +26,7 @@ export const SignUp: React.FC<SignUpProps> = ({}) => {
       <VStack flex={1} bg="gray.700" px={10} pb={16}>
         <Image
           source={BackgroundImg}
+          defaultSource={BackgroundImg}
           alt="Pessoas treinando"
           resizeMode="contain"
           position="absolute"
@@ -47,7 +57,12 @@ export const SignUp: React.FC<SignUpProps> = ({}) => {
           <Button title="Criar e acessar" />
         </Center>
 
-        <Button title="Voltar para o login" variant="outline" mt={24} />
+        <Button
+          title="Voltar para o login"
+          variant="outline"
+          mt={24}
+          onPress={handleGoBack}
+        />
       </VStack>
     </ScrollView>
   );
