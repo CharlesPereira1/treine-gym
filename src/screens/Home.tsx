@@ -59,7 +59,7 @@ export const Home: React.FC<HomeProps> = ({}) => {
         <FlatList
           data={exercises}
           keyExtractor={(item) => item}
-          renderItem={({ item }) => <ExeriseCard />}
+          renderItem={({ item }) => <ExeriseCard title={item} />}
           showsVerticalScrollIndicator={false}
           _contentContainerStyle={{ paddingBottom: 20 }}
         />

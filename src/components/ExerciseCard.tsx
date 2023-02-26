@@ -3,9 +3,11 @@ import { Heading, HStack, Icon, Image, Text, VStack } from 'native-base';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-type ExeriseCardProps = TouchableOpacityProps & {};
+type ExeriseCardProps = TouchableOpacityProps & {
+  title: string;
+};
 
-export const ExeriseCard: React.FC<ExeriseCardProps> = ({ ...rest }) => {
+export const ExeriseCard: React.FC<ExeriseCardProps> = ({ title, ...rest }) => {
   return (
     <TouchableOpacity {...rest}>
       <HStack
@@ -30,7 +32,7 @@ export const ExeriseCard: React.FC<ExeriseCardProps> = ({ ...rest }) => {
 
         <VStack flex={1}>
           <Heading fontSize="lg" color="white">
-            Remada unilateral
+            {title}
           </Heading>
 
           <Text fontSize="sm" color="gray.200" marginTop={1} numberOfLines={2}>
