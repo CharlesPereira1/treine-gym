@@ -15,6 +15,12 @@ export const Home: React.FC<HomeProps> = ({}) => {
     'ombro',
     'perna',
   ]);
+  const [exercises, setExercises] = useState([
+    'Puxada frontal',
+    'Remada curvada',
+    'Remada unilateral',
+    'Agaixamento terra',
+  ]);
   const [groupSelected, setGroupSelected] = useState('costas');
 
   return (
@@ -46,13 +52,17 @@ export const Home: React.FC<HomeProps> = ({}) => {
           </Heading>
 
           <Text color="gray.200" fontSize="sm">
-            4
+            {exercises.length}
           </Text>
         </HStack>
 
-        <ExeriseCard />
-        <ExeriseCard />
-        <ExeriseCard />
+        <FlatList
+          data={exercises}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => <ExeriseCard />}
+          showsVerticalScrollIndicator={false}
+          _contentContainerStyle={{ paddingBottom: 20 }}
+        />
       </VStack>
     </VStack>
   );
