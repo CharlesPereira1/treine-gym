@@ -3,6 +3,7 @@ import { FlatList, Heading, HStack, Text, VStack } from 'native-base';
 
 import { HomeHeader } from '@components/HomeHeader';
 import { Group } from '@components/Group';
+import { ExeriseCard } from '@components/ExerciseCard';
 
 type HomeProps = {};
 
@@ -48,6 +49,8 @@ export const Home: React.FC<HomeProps> = ({}) => {
             4
           </Text>
         </HStack>
+
+        <ExeriseCard />
       </VStack>
     </VStack>
   );
