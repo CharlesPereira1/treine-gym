@@ -51,6 +51,8 @@ export const Home: React.FC<HomeProps> = ({}) => {
         </HStack>
 
         <ExeriseCard />
+        <ExeriseCard />
+        <ExeriseCard />
       </VStack>
     </VStack>
   );
