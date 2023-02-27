@@ -51,6 +51,7 @@ export const Home: React.FC<HomeProps> = ({}) => {
         _contentContainerStyle={{ px: 8 }}
         marginY={10}
         maxH={10}
+        minH={10}
       />
 
       {/* flex={1} ? */}

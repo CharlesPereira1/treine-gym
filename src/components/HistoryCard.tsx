@@ -15,8 +15,13 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({ title }) => {
       alignItems="center"
       justifyContent="space-between"
     >
-      <VStack>
-        <Heading color="white" fontSize="md" textTransform="capitalize">
+      <VStack flex={1}>
+        <Heading
+          color="white"
+          fontSize="md"
+          textTransform="capitalize"
+          numberOfLines={1}
+        >
           Costas
         </Heading>
 

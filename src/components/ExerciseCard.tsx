@@ -27,7 +27,7 @@ export const ExeriseCard: React.FC<ExeriseCardProps> = ({ title, ...rest }) => {
           h={16}
           rounded="md"
           marginRight={4}
-          resizeMode="center"
+          resizeMode="cover"
         />
 
         <VStack flex={1}>

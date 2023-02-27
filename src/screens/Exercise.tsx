@@ -7,6 +7,7 @@ import {
   HStack,
   Icon,
   Image,
+  ScrollView,
   Text,
   VStack,
 } from 'native-base';
@@ -59,44 +60,46 @@ export const Exercise: React.FC<ExerciseProps> = ({}) => {
         </HStack>
       </VStack>
 
-      <VStack p={8}>
-        <Image
-          w="full"
-          h={80}
-          source={{
-            uri: 'https://blog.lionfitness.com.br/wp-content/uploads/2019/01/Blog-75-1.jpg',
-          }}
-          alt="Imagem do exercício"
-          mb={3}
-          resizeMode="cover"
-          rounded="lg"
-        />
+      <ScrollView>
+        <VStack p={8}>
+          <Image
+            w="full"
+            h={80}
+            source={{
+              uri: 'https://blog.lionfitness.com.br/wp-content/uploads/2019/01/Blog-75-1.jpg',
+            }}
+            alt="Imagem do exercício"
+            mb={3}
+            resizeMode="cover"
+            rounded="lg"
+          />
 
-        <Box bg="gray.600" rounded="md" pb={4} px={4}>
-          <HStack
-            alignItems="center"
-            justifyContent="space-around"
-            mb={6}
-            mt={5}
-          >
-            <HStack>
-              <SeriesSVG />
-              <Text color="gray.200" ml={2}>
-                4 séries
-              </Text>
+          <Box bg="gray.600" rounded="md" pb={4} px={4}>
+            <HStack
+              alignItems="center"
+              justifyContent="space-around"
+              mb={6}
+              mt={5}
+            >
+              <HStack>
+                <SeriesSVG />
+                <Text color="gray.200" ml={2}>
+                  4 séries
+                </Text>
+              </HStack>
+
+              <HStack>
+                <RepetitionsSVG />
+                <Text color="gray.200" ml={2}>
+                  10/12 repetições
+                </Text>
+              </HStack>
             </HStack>
 
-            <HStack>
-              <RepetitionsSVG />
-              <Text color="gray.200" ml={2}>
-                10/12 repetições
-              </Text>
-            </HStack>
-          </HStack>
-
-          <Button title="Marcar como realizado" />
-        </Box>
-      </VStack>
+            <Button title="Marcar como realizado" />
+          </Box>
+        </VStack>
+      </ScrollView>
     </VStack>
   );
 };
