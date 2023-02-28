@@ -6,13 +6,14 @@ import {
   Skeleton,
   Text,
   Heading,
+  useToast,
 } from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
 import { ScreenHeader } from '@components/ScreenHeader';
 import { UserPhoto } from '@components/UserPhoto';
-import { Alert, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 
@@ -25,6 +26,8 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
   const [userPhoto, setUserPhoto] = useState(
     'https://github.com/charlespereira1.png'
   );
+
+  const toast = useToast();
 
   const handleUserPhotoSelect = async () => {
     try {
@@ -44,9 +47,11 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
         const photoInfo = await FileSystem.getInfoAsync(photoSelected.uri);
 
         if (photoInfo.size && photoInfo.size / 1024 / 1024 > 3) {
-          return Alert.alert(
-            'Essa imagem é muito grande. Escolha uma de até 5MB'
-          );
+          return toast.show({
+            title: 'Essa imagem é muito grande. Escolha uma de até 3MB',
+            placement: 'top',
+            bgColor: 'red.500',
+          });
         }
 
         setUserPhoto(photoSelected.uri);
