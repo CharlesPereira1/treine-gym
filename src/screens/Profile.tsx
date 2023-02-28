@@ -7,6 +7,7 @@ import {
   Text,
   Heading,
 } from 'native-base';
+import * as ImagePicker from 'expo-image-picker';
 
 import { ScreenHeader } from '@components/ScreenHeader';
 import { UserPhoto } from '@components/UserPhoto';
@@ -20,6 +21,25 @@ const PHOTO_SIZE = 33;
 
 export const Profile: React.FC<ProfileProps> = ({}) => {
   const [photoIsLoading, setPhotoIsLoading] = useState(false);
+  const [userPhoto, setUserPhoto] = useState(
+    'https://github.com/charlespereira1.png'
+  );
+
+  const handleUserPhotoSelect = async () => {
+    const photoSelected = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1,
+      aspect: [4, 4],
+      allowsEditing: true,
+    });
+
+    if (photoSelected.cancelled) {
+      return;
+    }
+
+    setUserPhoto(photoSelected.uri);
+  };
+
   return (
     <VStack flex={1}>
       <ScreenHeader title="Perfil" />
@@ -35,13 +55,13 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
             />
           ) : (
             <UserPhoto
-              source={{ uri: 'https://github.com/charlespereira1.png' }}
+              source={{ uri: userPhoto }}
               alt="foto do usuário"
               size={PHOTO_SIZE}
             />
           )}
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleUserPhotoSelect}>
             <Text
               color="green.500"
               fontWeight="bold"
