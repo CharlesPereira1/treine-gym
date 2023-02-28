@@ -8,10 +8,11 @@ import {
   Heading,
 } from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 import { ScreenHeader } from '@components/ScreenHeader';
 import { UserPhoto } from '@components/UserPhoto';
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 
@@ -26,18 +27,35 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
   );
 
   const handleUserPhotoSelect = async () => {
-    const photoSelected = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-      aspect: [4, 4],
-      allowsEditing: true,
-    });
+    try {
+      setPhotoIsLoading(true);
+      const photoSelected = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1,
+        aspect: [4, 4],
+        allowsEditing: true,
+      });
 
-    if (photoSelected.cancelled) {
-      return;
+      if (photoSelected.cancelled) {
+        return;
+      }
+
+      if (photoSelected.uri) {
+        const photoInfo = await FileSystem.getInfoAsync(photoSelected.uri);
+
+        if (photoInfo.size && photoInfo.size / 1024 / 1024 > 3) {
+          return Alert.alert(
+            'Essa imagem é muito grande. Escolha uma de até 5MB'
+          );
+        }
+
+        setUserPhoto(photoSelected.uri);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPhotoIsLoading(false);
     }
-
-    setUserPhoto(photoSelected.uri);
   };
 
   return (

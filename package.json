@@ -13,6 +13,7 @@
     "@react-navigation/native": "^6.1.4",
     "@react-navigation/native-stack": "^6.9.10",
     "expo": "~41.0.1",
+    "expo-file-system": "~11.0.2",
     "expo-font": "~9.1.0",
     "expo-image-picker": "~10.1.4",
     "expo-splash-screen": "~0.10.2",
