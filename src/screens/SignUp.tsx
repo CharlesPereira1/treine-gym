@@ -13,8 +13,19 @@ import { Button } from '@components/Button';
 
 type SignUpProps = {};
 
+type FormDataProps = {
+  name: string;
+  email: string;
+  password: string;
+  password_confirm: string;
+};
+
 export const SignUp: React.FC<SignUpProps> = ({}) => {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm<FormDataProps>({
+    defaultValues: {
+      name: 'Charles',
+    },
+  });
 
   const { goBack } = useNavigation<AuthNavigationroutesProps>();
 
@@ -22,7 +33,7 @@ export const SignUp: React.FC<SignUpProps> = ({}) => {
     goBack();
   };
 
-  const handleSignUp = (data: any) => {
+  const handleSignUp = (data: FormDataProps) => {
     console.log(data);
   };
 
