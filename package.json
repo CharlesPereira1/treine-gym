@@ -21,6 +21,7 @@
     "native-base": "^3.4.25",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-hook-form": "^7.43.3",
     "react-native": "~0.63.4",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-reanimated": "~2.1.0",
