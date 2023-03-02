@@ -14,12 +14,16 @@ import { Button } from '@components/Button';
 type SignUpProps = {};
 
 export const SignUp: React.FC<SignUpProps> = ({}) => {
-  const { control } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const { goBack } = useNavigation<AuthNavigationroutesProps>();
 
   const handleGoBack = () => {
     goBack();
+  };
+
+  const handleSignUp = (data: any) => {
+    console.log(data);
   };
 
   return (
@@ -92,11 +96,16 @@ export const SignUp: React.FC<SignUpProps> = ({}) => {
                 secureTextEntry
                 onChangeText={onChange}
                 value={value}
+                onSubmitEditing={handleSubmit(handleSignUp)}
+                returnKeyType="send"
               />
             )}
           />
 
-          <Button title="Criar e acessar" />
+          <Button
+            title="Criar e acessar"
+            onPress={handleSubmit(handleSignUp)}
+          />
         </Center>
 
         <Button
