@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { AuthNavigationroutesProps } from '@routes/auth.routes';
 
@@ -20,11 +22,16 @@ type FormDataProps = {
   password_confirm: string;
 };
 
+const signUpSchema = yup.object({
+  name: yup.string().required('Informe o nome'),
+  email: yup.string().required('Informe o e-mail').email('E-mail inválido'),
+  // name: yup.string().required('')
+  // name: yup.string().required('')
+});
+
 export const SignUp: React.FC<SignUpProps> = ({}) => {
   const { control, handleSubmit } = useForm<FormDataProps>({
-    defaultValues: {
-      name: 'Charles',
-    },
+    resolver: yupResolver(signUpSchema),
   });
 
   const { goBack } = useNavigation<AuthNavigationroutesProps>();
