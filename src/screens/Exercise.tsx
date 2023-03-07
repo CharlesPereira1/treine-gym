@@ -47,7 +47,12 @@ export const Exercise: React.FC<ExerciseProps> = ({}) => {
           {/*
            * flexShrink 1: impende que chegue o texto do lado para o canto
            */}
-          <Heading color="gray.100" fontSize="lg" flexShrink={1}>
+          <Heading
+            color="gray.100"
+            fontSize="lg"
+            flexShrink={1}
+            fontFamily="heading"
+          >
             Puxada frontal
           </Heading>
 

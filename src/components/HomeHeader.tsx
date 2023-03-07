@@ -22,7 +22,7 @@ export const HomeHeader: React.FC<HomeHeaderProps> = ({}) => {
           Olá,
         </Text>
 
-        <Heading color="gray.100" fontSize="md">
+        <Heading color="gray.100" fontSize="md" fontFamily="heading">
           Charles
         </Heading>
       </VStack>

@@ -19,6 +19,7 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({ title }) => {
         <Heading
           color="white"
           fontSize="md"
+          fontFamily="heading"
           textTransform="capitalize"
           numberOfLines={1}
         >
