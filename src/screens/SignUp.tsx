@@ -1,11 +1,18 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
+import {
+  Center,
+  Heading,
+  Image,
+  ScrollView,
+  Text,
+  useToast,
+  VStack,
+} from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import axios from 'axios';
 
 import { AuthNavigationroutesProps } from '@routes/auth.routes';
 
@@ -16,6 +23,8 @@ import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 
 import { api } from '@services/api';
+
+import { AppError } from '@utils/AppError';
 
 type SignUpProps = {};
 
@@ -48,6 +57,7 @@ export const SignUp: React.FC<SignUpProps> = ({}) => {
     resolver: yupResolver(signUpSchema),
   });
 
+  const toast = useToast();
   const { goBack } = useNavigation<AuthNavigationroutesProps>();
 
   const handleGoBack = () => {
@@ -62,9 +72,19 @@ export const SignUp: React.FC<SignUpProps> = ({}) => {
         password,
       });
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        Alert.alert(error.response?.data.message);
-      }
+      const isAppError = error instanceof AppError;
+
+      console.log('isAppError', isAppError);
+
+      const title = isAppError
+        ? error.message
+        : 'Não foi possível criar a conta. Tente novamente mais tarde.';
+
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500',
+      });
     }
   };
 
