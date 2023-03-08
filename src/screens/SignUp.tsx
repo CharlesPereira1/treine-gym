@@ -13,6 +13,8 @@ import LogoSvg from '@assets/logo.svg';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 
+import { api } from '@services/api';
+
 type SignUpProps = {};
 
 type FormDataProps = {
@@ -50,8 +52,12 @@ export const SignUp: React.FC<SignUpProps> = ({}) => {
     goBack();
   };
 
-  const handleSignUp = (data: FormDataProps) => {
-    console.log(data);
+  const handleSignUp = async ({ name, email, password }: FormDataProps) => {
+    await api.post('users', {
+      name,
+      email,
+      password,
+    });
   };
 
   return (
