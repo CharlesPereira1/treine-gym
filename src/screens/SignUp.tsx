@@ -74,8 +74,6 @@ export const SignUp: React.FC<SignUpProps> = ({}) => {
     } catch (error) {
       const isAppError = error instanceof AppError;
 
-      console.log('isAppError', isAppError);
-
       const title = isAppError
         ? error.message
         : 'Não foi possível criar a conta. Tente novamente mais tarde.';
