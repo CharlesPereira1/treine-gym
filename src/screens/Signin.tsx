@@ -1,6 +1,9 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { AuthNavigationroutesProps } from '@routes/auth.routes';
 
@@ -10,13 +13,29 @@ import { Button } from '@components/Button';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 
-type SigninProps = {};
+import { useAuth } from '@hooks/auth';
+import { AppError } from '@utils/AppError';
 
-export const Signin: React.FC<SigninProps> = ({}) => {
+export const Signin: React.FC = ({}) => {
+  const { signIn } = useAuth();
   const navigation = useNavigation<AuthNavigationroutesProps>();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const handleNewAccount = () => {
     navigation.navigate('signUp');
+  };
+
+  const handleSignIn = async ({ email, password }) => {
+    try {
+      await signIn(email, password);
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+    }
   };
 
   return (
@@ -45,13 +64,30 @@ export const Signin: React.FC<SigninProps> = ({}) => {
             Acesse sua conta
           </Heading>
 
-          <Input
-            placeholder="E-mail"
-            keyboardType="email-address"
-            autoCapitalize="none"
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange } }) => (
+              <Input
+                placeholder="E-mail"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onChangeText={onChange}
+              />
+            )}
           />
 
-          <Input placeholder="Senha" secureTextEntry />
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange } }) => (
+              <Input
+                placeholder="Senha"
+                secureTextEntry
+                onChangeText={onChange}
+              />
+            )}
+          />
 
           <Button title="Acessar" />
         </Center>
@@ -64,7 +100,7 @@ export const Signin: React.FC<SigninProps> = ({}) => {
           <Button
             title="Criar conta"
             variant="outline"
-            onPress={handleNewAccount}
+            onPress={handleSubmit(handleNewAccount)}
           />
         </Center>
       </VStack>
