@@ -16,6 +16,11 @@ import LogoSvg from '@assets/logo.svg';
 import { useAuth } from '@hooks/auth';
 import { AppError } from '@utils/AppError';
 
+type SigninProps = {
+  email: string;
+  password: string;
+};
+
 export const Signin: React.FC = ({}) => {
   const { signIn } = useAuth();
   const navigation = useNavigation<AuthNavigationroutesProps>();
@@ -24,13 +29,13 @@ export const Signin: React.FC = ({}) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<SigninProps>();
 
   const handleNewAccount = () => {
     navigation.navigate('signUp');
   };
 
-  const handleSignIn = async ({ email, password }) => {
+  const handleSignIn = async ({ email, password }: SigninProps) => {
     try {
       await signIn(email, password);
     } catch (error) {
@@ -73,6 +78,7 @@ export const Signin: React.FC = ({}) => {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 onChangeText={onChange}
+                errorMessage={errors.email?.message}
               />
             )}
           />
@@ -85,6 +91,7 @@ export const Signin: React.FC = ({}) => {
                 placeholder="Senha"
                 secureTextEntry
                 onChangeText={onChange}
+                errorMessage={errors.email?.message}
               />
             )}
           />
@@ -100,7 +107,7 @@ export const Signin: React.FC = ({}) => {
           <Button
             title="Criar conta"
             variant="outline"
-            onPress={handleSubmit(handleNewAccount)}
+            onPress={handleSubmit(handleSignIn)}
           />
         </Center>
       </VStack>
