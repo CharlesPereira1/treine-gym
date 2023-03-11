@@ -1,6 +1,14 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
+import {
+  Center,
+  Heading,
+  Image,
+  ScrollView,
+  Text,
+  useToast,
+  VStack,
+} from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -23,6 +31,7 @@ type SigninProps = {
 
 export const Signin: React.FC = ({}) => {
   const { signIn } = useAuth();
+  const toast = useToast();
   const navigation = useNavigation<AuthNavigationroutesProps>();
 
   const {
@@ -40,6 +49,16 @@ export const Signin: React.FC = ({}) => {
       await signIn(email, password);
     } catch (error) {
       const isAppError = error instanceof AppError;
+
+      const title = isAppError
+        ? error.message
+        : 'Não foi possível entrar. Tente novamente amis tarde.';
+
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500',
+      });
     }
   };
 
