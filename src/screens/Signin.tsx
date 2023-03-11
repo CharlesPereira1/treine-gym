@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   Center,
@@ -10,8 +10,6 @@ import {
   VStack,
 } from 'native-base';
 import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
 import { AuthNavigationroutesProps } from '@routes/auth.routes';
 
@@ -30,6 +28,8 @@ type SigninProps = {
 };
 
 export const Signin: React.FC = ({}) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { signIn } = useAuth();
   const toast = useToast();
   const navigation = useNavigation<AuthNavigationroutesProps>();
@@ -46,19 +46,23 @@ export const Signin: React.FC = ({}) => {
 
   const handleSignIn = async ({ email, password }: SigninProps) => {
     try {
+      setIsLoading(true);
+
       await signIn(email, password);
     } catch (error) {
       const isAppError = error instanceof AppError;
 
       const title = isAppError
         ? error.message
-        : 'Não foi possível entrar. Tente novamente amis tarde.';
+        : 'Não foi possível entrar. Tente novamente mais tarde.';
 
       toast.show({
         title,
         placement: 'top',
         bgColor: 'red.500',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -127,6 +131,7 @@ export const Signin: React.FC = ({}) => {
             title="Criar conta"
             variant="outline"
             onPress={handleSubmit(handleSignIn)}
+            isLoading={isLoading}
           />
         </Center>
       </VStack>
