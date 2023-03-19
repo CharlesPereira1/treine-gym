@@ -3,6 +3,10 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { api } from '@services/api';
 
 import {
+  storageAuthTokenGet,
+  storageAuthTokenSave,
+} from '@storage/storageAuthToken';
+import {
   storageUserGet,
   storageUserRemove,
   storageUserSave,
@@ -23,16 +27,28 @@ const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<UserDTO>({} as UserDTO);
   const [isLoadingUserStorage, setIsLoadingUserStorage] = useState(true);
 
+  const userAndTokenUpdate = async (userData: UserDTO, token: string) => {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    setUser(userData);
+  };
+
   const signIn = async (email: string, password: string) => {
     try {
+      setIsLoadingUserStorage(true);
+
       const { data } = await api.post('sessions', { email, password });
 
-      if (data.user) {
-        setUser(data.user);
-        storageUserSave(data.user);
+      if (data.user && data.token) {
+        await storageUserSave(data.user);
+        await storageAuthTokenSave(data.token);
+
+        userAndTokenUpdate(data.user, data.token);
       }
     } catch (error) {
       throw error;
+    } finally {
+      setIsLoadingUserStorage(false);
     }
   };
 
@@ -52,10 +68,13 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const loadUserData = async () => {
     try {
-      const userLogged = await storageUserGet();
+      setIsLoadingUserStorage(true);
 
-      if (userLogged) {
-        setUser(userLogged);
+      const userLogged = await storageUserGet();
+      const token = await storageAuthTokenGet();
+
+      if (token && userLogged) {
+        userAndTokenUpdate(userLogged, token);
       }
     } catch (error) {
       throw error;
