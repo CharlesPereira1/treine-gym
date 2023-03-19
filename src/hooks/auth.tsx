@@ -36,13 +36,13 @@ const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
-  const signOut = () => {
+  const signOut = async () => {
     try {
       setIsLoadingUserStorage(true);
 
       setUser({} as UserDTO);
 
-      storageUserRemove();
+      await storageUserRemove();
     } catch (error) {
       throw error;
     } finally {
