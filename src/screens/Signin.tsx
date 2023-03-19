@@ -119,7 +119,11 @@ export const Signin: React.FC = ({}) => {
             )}
           />
 
-          <Button title="Acessar" onPress={handleSubmit(handleSignIn)} />
+          <Button
+            title="Acessar"
+            onPress={handleSubmit(handleSignIn)}
+            isLoading={isLoading}
+          />
         </Center>
 
         <Center mt={24}>
@@ -131,7 +135,6 @@ export const Signin: React.FC = ({}) => {
             title="Criar conta"
             variant="outline"
             onPress={handleNewAccount}
-            isLoading={isLoading}
           />
         </Center>
       </VStack>
