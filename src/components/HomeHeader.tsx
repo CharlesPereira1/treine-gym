@@ -5,13 +5,19 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { UserPhoto } from './UserPhoto';
 
+import { useAuth } from '@hooks/auth';
+
+import defaultUserPhotoImg from '@assets/userPhotoDefault.png';
+
 type HomeHeaderProps = {};
 
 export const HomeHeader: React.FC<HomeHeaderProps> = ({}) => {
+  const { user } = useAuth();
+
   return (
     <HStack bg="gray.600" pt={16} pb={5} paddingX={8} alignItems="center">
       <UserPhoto
-        source={{ uri: 'https://github.com/charlespereira1.png' }}
+        source={user.avatar ? { uri: user.avatar } : defaultUserPhotoImg}
         alt="Imagem do usuário"
         size={16}
         marginRight={4}
@@ -22,8 +28,13 @@ export const HomeHeader: React.FC<HomeHeaderProps> = ({}) => {
           Olá,
         </Text>
 
-        <Heading color="gray.100" fontSize="md" fontFamily="heading">
-          Charles
+        <Heading
+          color="gray.100"
+          fontSize="md"
+          fontFamily="heading"
+          textTransform={'capitalize'}
+        >
+          {user.name}
         </Heading>
       </VStack>
 
