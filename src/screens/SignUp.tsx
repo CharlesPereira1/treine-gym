@@ -1,5 +1,4 @@
-import React from 'react';
-import { Alert } from 'react-native';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   Center,
@@ -25,6 +24,7 @@ import { Button } from '@components/Button';
 import { api } from '@services/api';
 
 import { AppError } from '@utils/AppError';
+import { useAuth } from '@hooks/auth';
 
 type FormDataProps = {
   name: string;
@@ -47,6 +47,9 @@ const signUpSchema = yup.object({
 });
 
 export const SignUp: React.FC = ({}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { signIn } = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -64,11 +67,14 @@ export const SignUp: React.FC = ({}) => {
 
   const handleSignUp = async ({ name, email, password }: FormDataProps) => {
     try {
+      setIsLoading(true);
       await api.post('users', {
         name,
         email,
         password,
       });
+
+      await signIn(email, password);
     } catch (error) {
       const isAppError = error instanceof AppError;
 
@@ -81,6 +87,8 @@ export const SignUp: React.FC = ({}) => {
         placement: 'top',
         bgColor: 'red.500',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -171,6 +179,7 @@ export const SignUp: React.FC = ({}) => {
           <Button
             title="Criar e acessar"
             onPress={handleSubmit(handleSignUp)}
+            isLoading={isLoading}
           />
         </Center>
 
