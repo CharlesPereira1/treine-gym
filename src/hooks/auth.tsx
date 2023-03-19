@@ -1,10 +1,11 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-import { UserDTO } from '@dtos/UserDTO';
 import { api } from '@services/api';
 
+import { UserDTO } from '@dtos/UserDTO';
+
 export type AuthContextData = {
-  user?: UserDTO;
+  user: UserDTO;
   signIn: (email: string, password: string) => Promise<void>;
 };
 
@@ -26,7 +27,9 @@ const AuthProvider: React.FC = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signIn }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, signIn }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

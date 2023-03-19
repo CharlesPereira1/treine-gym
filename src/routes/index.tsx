@@ -5,8 +5,11 @@ import { Box, useTheme } from 'native-base';
 import { AuthRoutes } from './auth.routes';
 import { AppRoutes } from './app.routes';
 
+import { useAuth } from '@hooks/auth';
+
 export const Routes: React.FC = ({}) => {
   const { colors } = useTheme();
+  const { user } = useAuth();
 
   const theme = DefaultTheme;
   theme.colors.background = colors.gray[700];
@@ -14,7 +17,7 @@ export const Routes: React.FC = ({}) => {
   return (
     <Box flex={1} bg="gray.700">
       <NavigationContainer theme={theme}>
-        <AuthRoutes />
+        {user.id ? <AppRoutes /> : <AuthRoutes />}
       </NavigationContainer>
     </Box>
   );

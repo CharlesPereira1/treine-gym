@@ -26,8 +26,6 @@ import { api } from '@services/api';
 
 import { AppError } from '@utils/AppError';
 
-type SignUpProps = {};
-
 type FormDataProps = {
   name: string;
   email: string;
@@ -48,7 +46,7 @@ const signUpSchema = yup.object({
     .oneOf([yup.ref('password')], 'A confirmação da senha não confere.'), //acessa conteúdo do input pelo parametro
 });
 
-export const SignUp: React.FC<SignUpProps> = ({}) => {
+export const SignUp: React.FC = ({}) => {
   const {
     control,
     handleSubmit,
