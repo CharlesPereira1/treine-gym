@@ -4,6 +4,7 @@ import { api } from '@services/api';
 
 import {
   storageAuthTokenGet,
+  storageAuthTokenRemove,
   storageAuthTokenSave,
 } from '@storage/storageAuthToken';
 import {
@@ -59,6 +60,7 @@ const AuthProvider: React.FC = ({ children }) => {
       setUser({} as UserDTO);
 
       await storageUserRemove();
+      await storageAuthTokenRemove();
     } catch (error) {
       throw error;
     } finally {
