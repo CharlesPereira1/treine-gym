@@ -12,8 +12,10 @@ import { AppError } from '@utils/AppError';
 import { api } from '@services/api';
 
 import { ExerciseDTO } from '@dtos/ExerciseDTO';
+import { Loading } from '@components/Loading';
 
 export const Home: React.FC = ({}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [groups, setGroups] = useState<string[]>([]);
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
   const [groupSelected, setGroupSelected] = useState('costas');
@@ -44,6 +46,7 @@ export const Home: React.FC = ({}) => {
 
   const fetchExercisesByGroups = async () => {
     try {
+      setIsLoading(true);
       const response = await api.get(`exercises/bygroup/${groupSelected}`);
 
       setExercises(response.data);
@@ -55,6 +58,8 @@ export const Home: React.FC = ({}) => {
         : 'Não foi possível carregar os exercícios.';
 
       toast.show({ title, placement: 'top', bgColor: 'red.500' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -90,28 +95,31 @@ export const Home: React.FC = ({}) => {
         minH={10}
       />
 
-      {/* flex={1} ? */}
-      <VStack paddingX={8}>
-        <HStack justifyContent="space-between" mb={5}>
-          <Heading color="gray.200" fontSize="md" fontFamily="heading">
-            Exercícios
-          </Heading>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <VStack paddingX={8}>
+          <HStack justifyContent="space-between" mb={5}>
+            <Heading color="gray.200" fontSize="md" fontFamily="heading">
+              Exercícios
+            </Heading>
 
-          <Text color="gray.200" fontSize="sm">
-            {exercises.length}
-          </Text>
-        </HStack>
+            <Text color="gray.200" fontSize="sm">
+              {exercises.length}
+            </Text>
+          </HStack>
 
-        <FlatList
-          data={exercises}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <ExeriseCard data={item} onPress={handleOpenExerciseDetails} />
-          )}
-          showsVerticalScrollIndicator={false}
-          _contentContainerStyle={{ paddingBottom: 20 }}
-        />
-      </VStack>
+          <FlatList
+            data={exercises}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <ExeriseCard data={item} onPress={handleOpenExerciseDetails} />
+            )}
+            showsVerticalScrollIndicator={false}
+            _contentContainerStyle={{ paddingBottom: 20 }}
+          />
+        </VStack>
+      )}
     </VStack>
   );
 };
