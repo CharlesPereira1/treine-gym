@@ -24,8 +24,8 @@ export const Home: React.FC = ({}) => {
 
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
-  const handleOpenExerciseDetails = () => {
-    navigation.navigate('exercise');
+  const handleOpenExerciseDetails = (exerciseId: string) => {
+    navigation.navigate('exercise', { exerciseId });
   };
 
   const fetchGroups = async () => {
@@ -113,7 +113,10 @@ export const Home: React.FC = ({}) => {
             data={exercises}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <ExeriseCard data={item} onPress={handleOpenExerciseDetails} />
+              <ExeriseCard
+                data={item}
+                onPress={() => handleOpenExerciseDetails(item.id)}
+              />
             )}
             showsVerticalScrollIndicator={false}
             _contentContainerStyle={{ paddingBottom: 20 }}
