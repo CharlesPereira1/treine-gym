@@ -106,10 +106,7 @@ export const Home: React.FC = ({}) => {
           data={exercises}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <ExeriseCard
-              title={item.name}
-              onPress={handleOpenExerciseDetails}
-            />
+            <ExeriseCard data={item} onPress={handleOpenExerciseDetails} />
           )}
           showsVerticalScrollIndicator={false}
           _contentContainerStyle={{ paddingBottom: 20 }}
