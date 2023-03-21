@@ -12,7 +12,7 @@ import {
   VStack,
 } from 'native-base';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { AppNavigatorRoutesProps } from '@routes/app.routes';
 
@@ -24,8 +24,14 @@ import RepetitionsSVG from '@assets/repetitions.svg';
 
 type ExerciseProps = {};
 
+type RouteParamsProps = {
+  exerciseId: string;
+};
+
 export const Exercise: React.FC<ExerciseProps> = ({}) => {
   const { goBack } = useNavigation<AppNavigatorRoutesProps>();
+
+  const { exerciseId } = useRoute().params as RouteParamsProps;
 
   const handleGoBack = () => {
     goBack();
