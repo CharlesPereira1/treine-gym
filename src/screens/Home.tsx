@@ -18,7 +18,7 @@ export const Home: React.FC = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [groups, setGroups] = useState<string[]>([]);
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
-  const [groupSelected, setGroupSelected] = useState('costas');
+  const [groupSelected, setGroupSelected] = useState('antebraço');
 
   const toast = useToast();
 
