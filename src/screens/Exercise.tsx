@@ -33,6 +33,7 @@ type RouteParamsProps = {
 };
 
 export const Exercise: React.FC = ({}) => {
+  const [sendingRegister, setSendingRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [exercise, setExercise] = useState<ExerciseDTO>({} as ExerciseDTO);
 
@@ -67,6 +68,30 @@ export const Exercise: React.FC = ({}) => {
       toast.show({ title, placement: 'top', bgColor: 'red.500' });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleExerciseHistoryRegister = async () => {
+    try {
+      setSendingRegister(true);
+
+      await api.post('/history', { exerciseId });
+
+      toast.show({
+        title: 'Exercício registrado no seu histórico com sucesso.',
+        placement: 'top',
+        bgColor: 'green.700',
+      });
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+
+      const title = isAppError
+        ? error.message
+        : 'Não foi possível carregar os detalhes do exercício.';
+
+      toast.show({ title, placement: 'top', bgColor: 'red.500' });
+    } finally {
+      setSendingRegister(false);
     }
   };
 
@@ -149,7 +174,11 @@ export const Exercise: React.FC = ({}) => {
                 </HStack>
               </HStack>
 
-              <Button title="Marcar como realizado" />
+              <Button
+                title="Marcar como realizado"
+                isLoading={sendingRegister}
+                onPress={handleExerciseHistoryRegister}
+              />
             </Box>
           </VStack>
         )}
