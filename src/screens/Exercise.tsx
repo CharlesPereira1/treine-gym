@@ -37,7 +37,7 @@ export const Exercise: React.FC = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [exercise, setExercise] = useState<ExerciseDTO>({} as ExerciseDTO);
 
-  const { goBack } = useNavigation<AppNavigatorRoutesProps>();
+  const { goBack, navigate } = useNavigation<AppNavigatorRoutesProps>();
 
   const { exerciseId } = useRoute().params as RouteParamsProps;
 
@@ -82,6 +82,8 @@ export const Exercise: React.FC = ({}) => {
         placement: 'top',
         bgColor: 'green.700',
       });
+
+      navigate('history');
     } catch (error) {
       const isAppError = error instanceof AppError;
 
