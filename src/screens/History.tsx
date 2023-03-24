@@ -8,11 +8,13 @@ import { HistoryCard } from '@components/HistoryCard';
 import { AppError } from '@utils/AppError';
 import { api } from '@services/api';
 
+import { HistoryByDayDTO } from '@dtos/HistoryDTO';
+
 type HistoryProps = {};
 
 export const History: React.FC<HistoryProps> = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [exercises, setExercises] = useState([]);
+  const [exercises, setExercises] = useState<HistoryByDayDTO[]>([]);
 
   const toast = useToast();
 
@@ -20,7 +22,9 @@ export const History: React.FC<HistoryProps> = ({}) => {
     try {
       setIsLoading(true);
 
-      await api.get('/history');
+      const response = await api.get('/history');
+
+      setExercises(response.data);
     } catch (error) {
       const isAppError = error instanceof AppError;
 
@@ -46,7 +50,7 @@ export const History: React.FC<HistoryProps> = ({}) => {
 
       <SectionList
         sections={exercises}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => <HistoryCard />}
         renderSectionHeader={({ section }) => (
           <Heading
