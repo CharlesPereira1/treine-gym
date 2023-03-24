@@ -1,9 +1,11 @@
 import React from 'react';
-import { Center, Heading, HStack, Text, VStack } from 'native-base';
+import { Heading, HStack, Text, VStack } from 'native-base';
 
-type HistoryCardProps = { title?: string };
+import { HistoryDTO } from '@dtos/HistoryDTO';
 
-export const HistoryCard: React.FC<HistoryCardProps> = ({ title }) => {
+type HistoryCardProps = { data: HistoryDTO };
+
+export const HistoryCard: React.FC<HistoryCardProps> = ({ data }) => {
   return (
     <HStack
       w="full"
@@ -23,16 +25,16 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({ title }) => {
           textTransform="capitalize"
           numberOfLines={1}
         >
-          Costas
+          {data.group}
         </Heading>
 
         <Text color="gray.100" fontSize="lg" numberOfLines={1}>
-          Puxada frontal
+          {data.name}
         </Text>
       </VStack>
 
       <Text color="gray.300" fontSize="md">
-        08:23
+        {data.hours}
       </Text>
     </HStack>
   );
