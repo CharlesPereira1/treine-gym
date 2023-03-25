@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+import { Controller, useForm } from 'react-hook-form';
 
 import { ScreenHeader } from '@components/ScreenHeader';
 import { UserPhoto } from '@components/UserPhoto';
@@ -28,6 +29,7 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
   );
 
   const toast = useToast();
+  const { control } = useForm();
 
   const handleUserPhotoSelect = async () => {
     try {
@@ -96,7 +98,19 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
             </Text>
           </TouchableOpacity>
 
-          <Input bg="gray.600" placeholder="Nome" />
+          <Controller
+            control={control}
+            name="name"
+            render={({ field: { value, onChange } }) => (
+              <Input
+                bg="gray.600"
+                placeholder="Nome"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+
           <Input bg="gray.600" value="charlesti.ptu@gmail.com" isDisabled />
         </Center>
 
