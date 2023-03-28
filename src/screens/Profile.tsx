@@ -18,7 +18,15 @@ import { TouchableOpacity } from 'react-native';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 
-type ProfileProps = {};
+import { useAuth } from '@hooks/auth';
+
+type FormDataProps = {
+  name: string;
+  email: string;
+  password: string;
+  old_password: string;
+  confirm_password: string;
+};
 
 const PHOTO_SIZE = 33;
 
@@ -29,7 +37,13 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
   );
 
   const toast = useToast();
-  const { control } = useForm();
+  const { user } = useAuth();
+  const { control } = useForm<FormDataProps>({
+    defaultValues: {
+      name: user.name,
+      email: user.email,
+    },
+  });
 
   const handleUserPhotoSelect = async () => {
     try {
@@ -111,7 +125,19 @@ export const Profile: React.FC<ProfileProps> = ({}) => {
             )}
           />
 
-          <Input bg="gray.600" value="charlesti.ptu@gmail.com" isDisabled />
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { value, onChange } }) => (
+              <Input
+                bg="gray.600"
+                value="charlesti.ptu@gmail.com"
+                isDisabled
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
         </Center>
 
         <VStack px={10} mt={12} mb={9}>
